@@ -1,0 +1,27 @@
+/* Styles go here */
+
+
+
+.pr-2{
+    padding-right: 50px;
+}
+.pr-3{
+    padding-right:75px;
+}
+.pr-4{
+    padding-right:100px  !important;
+}
+
+.pl-4{
+    padding-left:100px  !important;
+}
+
+#navTag{
+    margin-left:100px  !important;
+}
+
+.header{
+    text-align: center;
+    padding-bottom:20px;
+    color:purple;   
+}
