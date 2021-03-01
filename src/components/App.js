@@ -139,7 +139,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="mainstyle" >
         <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap  shadow text-monospace text-white ">
           <a
             className="navbar-brand col-sm-3 col-md-2 mr-0 pl-4"
@@ -170,6 +170,21 @@ class App extends Component {
         &nbsp;
         <div className="container-fluid mt-5 pt-5">
           <h1 className="header">Nomad Crypto Tracker</h1>
+          <div className="row pb-3 pt-2">
+            
+            <div className="col-md-3 subHeader">
+            <h5>Filter By</h5>
+            </div>
+            <div className="col-md-3">
+            <button onClick= "">Percent Chane(15)</button>
+            </div>
+            <div className="col-md-3">
+            <button onClick= "">Percent Chane(30)</button>
+            </div>
+            <div className="col-md-3">
+            <button onClick= "">Percent Chane(1h)</button>
+            </div>
+          </div>
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <table className="table table-striped table-hover table-fixed table-bordered text-monospace">
@@ -186,30 +201,34 @@ class App extends Component {
                     <th scope="col">Percent Change(15m)</th>
                     <th scope="col">Percent Change(30m)</th>
                     <th scope="col">Percent Change(1h)</th>
+                    <th scope="col">24 vol change)</th>
+
 
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="tableBody">
                   {this.state.ccData.map((data, key) => {
 
-          
+                    
                     return (
                       <tr key={key}>
                         <td>{data.rank}</td>
                         <td>{data.symbol}</td>
                         <td><a target="_blank" rel="noopener noreferrer" href={"https://coinpaprika.com/coin/" + data.id}>{data.name}</a></td>
                         <td>${(data.quotes.USD.price).toFixed(2)}</td>
-                        {/* ${(data.quotes.USD.market_cap).toLocaleString("fr-CH")} */}
-                        <td>$</td>
+                        ${(data.quotes.USD.market_cap.toLocaleString())}
+                        {/* <td>$</td> */}
                         <td>{data.quotes.USD.percent_change_15m}</td>
                         <td>{data.quotes.USD.percent_change_30m}</td>
                         <td>{data.quotes.USD.percent_change_1h}</td>
+                        <td>{data.quotes.USD.volume_24h_change_24h}</td>
+
                       </tr>
                     )
                   })}
                 </tbody>
               </table>
-                }
+                
               </main>
           </div>
         </div>
