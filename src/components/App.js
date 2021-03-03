@@ -128,6 +128,15 @@ class App extends Component {
       })
   }
 
+  filterByFifteen = ()=>{
+    console.log('I ENTERED FILTERED BY FIFTEEN FUNCTION');
+  }
+
+  filterByThiry = () => {
+    console.log('I ENTERED FILTERED BY THIRTY FUNCTION');
+  }
+
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -176,7 +185,7 @@ class App extends Component {
             <h5>Filter By</h5>
             </div>
             <div className="col-md-3">
-            <button onClick= "">Percent Chane(15)</button>
+            <button onClick= {this.filterByFifteen()}>Percent Change(15)</button>
             </div>
             <div className="col-md-3">
             <button onClick= "">Percent Chane(30)</button>
