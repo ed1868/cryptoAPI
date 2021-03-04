@@ -107,7 +107,7 @@ class App extends Component {
     //getting ccurrency market data
     axios({
       "method": "GET",
-      "url": "https://coinpaprika1.p.rapidapi.com/exchanges",
+      "url": "https://coinpaprika1.p.rapidapi.com/global",
       "headers": {
         "content-type": "application/octet-stream",
         "x-rapidapi-host": "coinpaprika1.p.rapidapi.com",
@@ -128,13 +128,6 @@ class App extends Component {
       })
   }
 
-  filterByFifteen = ()=>{
-    console.log('I ENTERED FILTERED BY FIFTEEN FUNCTION');
-  }
-
-  filterByThiry = () => {
-    console.log('I ENTERED FILTERED BY THIRTY FUNCTION');
-  }
 
   
   constructor(props) {
@@ -145,6 +138,15 @@ class App extends Component {
       loading: true
     }
   }
+
+  filterByFifteen = ()=>{
+    console.log('I ENTERED FILTERED BY FIFTEEN FUNCTION');
+  }
+
+  filterByThiry = () => {
+    console.log('I ENTERED FILTERED BY THIRTY FUNCTION');
+  }
+
 
   render() {
     return (
@@ -171,7 +173,7 @@ class App extends Component {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {/* {(this.state.ccGlobalMcap).toLocaleString("fr-CH")} */}
+                {(this.state.ccGlobalMcap).toLocaleString("fr-CH")}
               </a>&nbsp;
             </li>
           }
