@@ -135,22 +135,45 @@ class App extends Component {
     this.state = {
       ccData: [],
       ccGlobalMcap: '',
-      loading: true
+      loading: true,
+      filter: true
     }
   }
 
   filterByFifteen = () => {
-    console.log('entro en filtered by 15m function')
+    if(this.state.filter){
+      this.setState({
+        ccData: this.state.ccData.sort((a,b) =>   a.quotes.USD.percent_change_15m - b.quotes.USD.percent_change_15m)
+      });
+
+      this.setState({
+        filter: false
+      });
+
+    }else{
+      this.setState({
+        ccData: this.state.ccData.sort((a,b) =>   b.quotes.USD.percent_change_15m - a.quotes.USD.percent_change_15m)
+      });
+
+      this.setState({
+        filter: true
+      });
+    }
+
+
+  }
+
+  filterByThirty = () => {
     this.setState({
-      ccData: this.state.ccData.sort((a,b) =>   b.quotes.USD.percent_change_15m - a.quotes.USD.percent_change_15m)
-    })
-
+      ccData: this.state.ccData.sort((a,b) =>   b.quotes.USD.percent_change_30m - a.quotes.USD.percent_change_30m)
+    });
   }
 
-  filterByThiry = () => {
-    console.log('I ENTERED FILTERED BY THIRTY FUNCTION');
+  filterByHour = () => {
+    this.setState({
+      ccData: this.state.ccData.sort((a,b) =>   b.quotes.USD.percent_change_1h - a.quotes.USD.percent_change_1h)
+    });
   }
-
 
   render() {
     return (
@@ -194,13 +217,14 @@ class App extends Component {
             <button onClick= {this.filterByFifteen}>Percent Change(15)</button>
             </div>
             <div className="col-md-3">
-            <button onClick= "">Percent Chane(30)</button>
+            <button onClick= {this.filterByThirty}>Percent Chane(30)</button>
             </div>
             <div className="col-md-3">
-            <button onClick= "">Percent Chane(1h)</button>
+            <button onClick= {this.filterByHour}>Percent Chane(1h)</button>
             </div>
           </div>
           <div className="row">
+            <h2>Click on Row name to filter</h2>
             <main role="main" className="col-lg-12 d-flex text-center">
               <table className="table table-striped table-hover table-fixed table-bordered text-monospace">
                 {/* <caption>Data Source:
