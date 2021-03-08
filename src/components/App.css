@@ -47,3 +47,10 @@
 .tableBody tr{
  height: 60px;
 }
+.textCenter{
+    text-align: center;
+}
+
+.hoverEffect{
+    cursor:pointer !important;
+}

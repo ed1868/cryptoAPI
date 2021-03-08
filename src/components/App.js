@@ -140,6 +140,29 @@ class App extends Component {
     }
   }
 
+  filterBy = (event) => {
+    console.log('ENTRO EN FILTER BY : ', event)
+
+    switch(event) {
+      case "rank":
+        // code block
+   
+        this.filterByFifteen()
+  
+        break;
+      case "symbol":
+        // code block
+
+        console.log('entro en symbol')
+        break;
+      default:
+        this.setState({
+          ccData: this.state.ccData.sort((a, b) => a.rank - b.rank)
+        })
+    }
+
+
+  }
   filterByFifteen = () => {
     if(this.state.filter){
       this.setState({
@@ -175,6 +198,9 @@ class App extends Component {
     });
   }
 
+  filterByDailyVol = () => {
+
+  }
   render() {
     return (
       <div className="mainstyle" >
@@ -213,9 +239,9 @@ class App extends Component {
             <div className="col-md-3 subHeader">
             <h5>Filter By</h5>
             </div>
-            <div className="col-md-3">
+            {/* <div className="col-md-3">
             <button onClick= {this.filterByFifteen}>Percent Change(15)</button>
-            </div>
+            </div> */}
             <div className="col-md-3">
             <button onClick= {this.filterByThirty}>Percent Chane(30)</button>
             </div>
@@ -224,7 +250,7 @@ class App extends Component {
             </div>
           </div>
           <div className="row">
-            <h2>Click on Row name to filter</h2>
+            <h2 className="col-md-12 textCenter">Click on Row name to filter</h2>
             <main role="main" className="col-lg-12 d-flex text-center">
               <table className="table table-striped table-hover table-fixed table-bordered text-monospace">
                 {/* <caption>Data Source:
@@ -232,15 +258,16 @@ class App extends Component {
                 </caption> */}
                 <thead className="thead-dark">
                   <tr>
-                    <th scope="col">Rank</th>
-                    <th scope="col">Symbol</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Market Cap</th>
-                    <th scope="col">Percent Change(15m)</th>
-                    <th scope="col">Percent Change(30m)</th>
-                    <th scope="col">Percent Change(1h)</th>
-                    <th scope="col">24 vol change)</th>
+                  
+                    <th className="hoverEffect" onClick= {e => this.filterBy("rank")} value="rank"  scope="col">Rank</th>
+                    <th className="hoverEffect" onClick= {e => this.filterBy("symbol")} scope="col">Symbol</th>
+                    <th className="hoverEffect" onClick= {e => this.filterBy("name")} scope="col">Name</th>
+                    <th className="hoverEffect" onClick= {e => this.filterBy("price")} scope="col">Price</th>
+                    <th className="hoverEffect" onClick= {e => this.filterBy("cap")} scope="col">Market Cap</th>
+                    <th className="hoverEffect" onClick= {e => this.filterBy("percentChange15")} scope="col">Percent Change(15m)</th>
+                    <th className="hoverEffect" onClick= {e => this.filterBy("percentChange30")} scope="col">Percent Change(30m)</th>
+                    <th className="hoverEffect" onClick= {e => this.filterBy("percentChange1h")} scope="col">Percent Change(1h)</th>
+                    <th className="hoverEffect" onClick= {e => this.filterBy("dailyVolume")} scope="col">24 vol change)</th>
 
 
                   </tr>
