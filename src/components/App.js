@@ -139,8 +139,12 @@ class App extends Component {
     }
   }
 
-  filterByFifteen = ()=>{
-    console.log('I ENTERED FILTERED BY FIFTEEN FUNCTION');
+  filterByFifteen = () => {
+    console.log('entro en filtered by 15m function')
+    this.setState({
+      ccData: this.state.ccData.sort((a,b) =>   b.quotes.USD.percent_change_15m - a.quotes.USD.percent_change_15m)
+    })
+
   }
 
   filterByThiry = () => {
@@ -187,7 +191,7 @@ class App extends Component {
             <h5>Filter By</h5>
             </div>
             <div className="col-md-3">
-            <button onClick= {this.filterByFifteen()}>Percent Change(15)</button>
+            <button onClick= {this.filterByFifteen}>Percent Change(15)</button>
             </div>
             <div className="col-md-3">
             <button onClick= "">Percent Chane(30)</button>
@@ -199,9 +203,9 @@ class App extends Component {
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <table className="table table-striped table-hover table-fixed table-bordered text-monospace">
-                <caption>Data Source:
+                {/* <caption>Data Source:
                       <a target="_blank" rel="noopener noreferrer" href="https://coinpaprika.com/">coinpaprika</a>
-                </caption>
+                </caption> */}
                 <thead className="thead-dark">
                   <tr>
                     <th scope="col">Rank</th>
@@ -229,7 +233,7 @@ class App extends Component {
                         <td>${(data.quotes.USD.price).toFixed(2)}</td>
                         ${(data.quotes.USD.market_cap.toLocaleString())}
                         {/* <td>$</td> */}
-                        <td>{data.quotes.USD.percent_change_15m}</td>
+                        <td>{data.quotes.USD.percent_change_15m}%</td>
                         <td>{data.quotes.USD.percent_change_30m}</td>
                         <td>{data.quotes.USD.percent_change_1h}</td>
                         <td>{data.quotes.USD.volume_24h_change_24h}</td>
