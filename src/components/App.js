@@ -10,16 +10,78 @@ import lend from '../logos/lend.png';
 import comp from '../logos/comp.png';
 import uni from '../logos/uni.png';
 import gnt from '../logos/gnt.png';
-
+import axios from 'axios'
+import API from '../Api/api';
+import Chart from "chart.js";
 import "./App.css"
 
-const axios = require("axios");
+
 
 class App extends Component {
 
   async componentWillMount() {
     await this.getData()
+
   }
+
+
+   drawChart = (bitcoins, bitDates) => {
+     
+    // Chart
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+ 
+
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: bitDates,
+        datasets: [{
+          label: 'BitCoin Price Index',
+          data: bitcoins,
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(255, 99, 132)',
+          fill: false,
+          tension: 0,
+          pointHoverRadius: 3,
+          borderWidth: 1,
+        }],
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: false,
+              min: 750,
+            },
+          }],
+        },
+      },
+    });
+  };
+
+   paintValues = (arr) => {
+    document.querySelector('#max').innerHTML = Math.max(...arr);
+    document.querySelector('#min').innerHTML = Math.min(...arr);
+  };
+  //getting bitcoin chart data
+
+   ajaxBitcoinRequest = () => {
+    const bitCoinInfo = axios.create({
+      baseURL: 'http://api.coindesk.com/v1/bpi/historical/close.json',
+    });
+  
+    bitCoinInfo.get()
+      .then((bitcoinData) => {
+        console.log('THIS IS THE BITCOUN DATA: ', bitcoinData)
+        const data = bitcoinData.data.bpi;
+        this.drawChart(Object.values(data), Object.keys(data));
+        this.paintValues(Object.values(data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   //getting&setting cryptocurrencies data
   getData = () => {
@@ -147,14 +209,29 @@ class App extends Component {
       case "rank":
         // code block
    
-        this.filterByFifteen()
+        this.filterByRank()
   
         break;
       case "symbol":
         // code block
 
-        console.log('entro en symbol')
+        this.filterBySymbol()
         break;
+
+        case "name":
+          this.filterByName()
+          break;
+
+          case "price":
+            this.filterByPrice()
+
+            break;
+
+            case "cap":
+              this.filterByCap()
+              break;
+
+              
       default:
         this.setState({
           ccData: this.state.ccData.sort((a, b) => a.rank - b.rank)
@@ -203,8 +280,8 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="mainstyle" >
-        <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap  shadow text-monospace text-white ">
+      <div className="" >
+        <nav id="nav" className="navbar  fixed-top  flex-md-nowrap  shadow text-monospace text-white ">
           <a
             className="navbar-brand col-sm-3 col-md-2 mr-0 pl-4"
             
@@ -216,12 +293,12 @@ class App extends Component {
 
             
           </a>
-          <img src={chart} width="30" height="30" className="d-inline-block align-top" alt="" />
+          
           {this.state.loading ? <div id="loader" className="nav-item text-nowrap d-none d-sm-none d-sm-block">Loading...</div> :
-            <li className="nav-item text-nowrap d-none d-sm-none d-sm-block pr-4">
-              <small>GCM:</small>&nbsp;$
+            <li className="nav-item mainColor text-nowrap d-none d-sm-none d-sm-block pr-4 ">
+              <small className="mainColor">GCM:</small>&nbsp;$
               <a
-                className="text-white"
+                className="mainColor"
                 href="https://coinpaprika.com/market-overview/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -231,10 +308,22 @@ class App extends Component {
             </li>
           }
         </nav>
-        &nbsp;
-        <div className="container-fluid mt-5 pt-5">
-          <h1 className="header">Nomad Crypto Tracker</h1>
-          <div className="row pb-3 pt-2">
+
+        <div className="container-fluid">
+
+        <h1 className="header pt-3">Nomad Crypto Tracker</h1>
+         <h2 className="textCenter pt-5"> <button onClick={this.ajaxBitcoinRequest} id="btn-bitcoin" className="btn btn-danger hoverEffect " >Click Here to get Nomad Bitcoin Graph</button></h2>
+          
+
+
+    <canvas id="myChart" className="pb-5" width="400" height="150px"></canvas>
+        </div>
+        <div className="container-fluid ">
+          
+
+
+          
+          <div className="row pb-3">
             
             <div className="col-md-3 subHeader">
             <h5>Filter By</h5>
