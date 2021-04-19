@@ -1,3 +1,133 @@
+import axios from "axios";
+
+
+class CoinData {
+    constructor() {
+        this.service = getExchangeData();
+
+        
+        
+
+
+    //getting&setting cryptocurrencies data
+    getExchangeData = () => {
+
+
+        //GET EXCHANGE DATA 
+
+        let exchangesIds = ["binance", "coinbase-pro", "gemini"];
+        axios({
+            "method": "GET",
+            "url": `https://coinpaprika1.p.rapidapi.com/exchanges/${exchangesIds[0]}/markets`,
+            "headers": {
+                "content-type": "application/octet-stream",
+                "x-rapidapi-host": "coinpaprika1.p.rapidapi.com",
+                "x-rapidapi-key": "69225c48e9msh6187f24c67061afp1b10f8jsnad7cfe59d33c",
+                "useQueryString": true
+            }
+        }).then((payload) => {
+                console.log(`FIRST PAYLOAD of cup: ${payload}`)
+            return payload;
+
+        }).catch((err) => {
+            if (err) {
+                console.log('WE HAVE AN ERROR ', err);
+            }
+        })
+
+    }
+
+
+    getCurrencyData = ()=> {
+        //getting ccurencies data
+        axios({
+            "method": "GET",
+            "url": "https://coinpaprika1.p.rapidapi.com/tickers",
+            "headers": {
+                "content-type": "application/octet-stream",
+                "x-rapidapi-host": "coinpaprika1.p.rapidapi.com",
+                "x-rapidapi-key": "69225c48e9msh6187f24c67061afp1b10f8jsnad7cfe59d33c",
+                "useQueryString": true
+            }
+        })
+            .then((response) => {
+                //assign all ccurencies data from API into variable
+                const coins = response.data
+
+                console.log('ALL THE COINS : ', coins)
+                //declare ccurencies and their imgs
+                const ccArray = [
+                    // { name: 'Bitcoin', img: btc },
+                    // { name: 'Ethereum', img: eth },
+                    // { name: 'Chainlink', img: link },
+                    // { name: 'Cardano', img: ada },
+                    // { name: 'Monero', img: xmr },
+                    // { name: 'yearn.finance', img: yfi },
+                    // { name: 'Aave', img: lend },
+                    // { name: 'Compound', img: comp },
+                    // { name: 'Uniswap', img: uni },
+                    // { name: 'Golem', img: gnt }
+                ]
+
+                /* search for chosen cryptocurrencies, then add them to the state */
+                //get ccurency from ccArray 
+
+
+
+                //get ccurrency from API
+                for (let i = 0; i < coins.length; i++) {
+                    //if current ccurrency API == current ccurrency from ccArray
+                    // if (coins[i].name === ccArray[j].name) {
+                    //add img to the ccurrency API data
+                    // coins[i]['img'] = ccArray[j].img
+                    //set state with updated data
+                    // this.setState({
+                    //   ccData: [...this.state.ccData, coins[i]]
+                    this.state.ccData.push(coins[i])
+                    // })
+                    // }
+                }
+
+                //sort ccurrencies by rank
+                this.setState({
+                    ccData: this.state.ccData.sort((a, b) => a.rank - b.rank)
+                })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    getCurrencyMarketData = () => {
+
+        //getting ccurrency market data
+        axios({
+            "method": "GET",
+            "url": "https://coinpaprika1.p.rapidapi.com/global",
+            "headers": {
+                "content-type": "application/octet-stream",
+                "x-rapidapi-host": "coinpaprika1.p.rapidapi.com",
+                "x-rapidapi-key": "69225c48e9msh6187f24c67061afp1b10f8jsnad7cfe59d33c",
+                "useQueryString": true
+            }
+        })
+            .then((response) => {
+                const globalData = response.data
+                console.log('THIS IS THE Exchanges DATA : ', globalData)
+                this.setState({ loading: true })
+                //set state with updated global ccurency market cap
+                this.setState({ ccGlobalMcap: globalData.market_cap_usd })
+                this.setState({ loading: false })
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+}
+
+export default CoinData;
+
+
 // import axios from 'axios'
 // import Chart from "chart.js";
 

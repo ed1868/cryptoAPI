@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "react-bootstrap";
 import chart from '../logos/chart.png';
 import btc from '../logos/btc.png';
 import eth from '../logos/eth.png';
@@ -11,16 +12,19 @@ import comp from '../logos/comp.png';
 import uni from '../logos/uni.png';
 import gnt from '../logos/gnt.png';
 import axios from 'axios'
-import API from '../Api/api';
+// import CoinData from '../Api/api';
 import Chart from "chart.js";
 import "./App.css"
+
 
 
 
 class App extends Component {
 
   async componentWillMount() {
-    await this.getData()
+    await this.getData();
+
+    
 
   }
 
@@ -318,6 +322,8 @@ class App extends Component {
 
     <canvas id="myChart" className="pb-5" width="400" height="150px"></canvas>
         </div>
+
+      
         <div className="container-fluid ">
           
 
@@ -361,6 +367,8 @@ class App extends Component {
 
                   </tr>
                 </thead>
+        
+   
                 <tbody className="tableBody">
                   {this.state.ccData.map((data, key) => {
 
